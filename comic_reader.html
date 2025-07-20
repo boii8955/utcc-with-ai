@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>อ่านการ์ตูน - เด็กหัวการค้า</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A; /* Deep dark background */
+            color: #E2E8F0; /* Light text */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .comic-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+        .comic-page {
+            max-width: 100%;
+            max-height: 80vh; /* Limit height to prevent overflow on smaller screens */
+            width: auto;
+            height: auto;
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transition: opacity 0.5s ease-in-out; /* Smooth transition for page changes */
+        }
+        .nav-button {
+            background-color: #1E3A8A; /* Dark blue button */
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 0.75rem;
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .nav-button:hover:not(:disabled) {
+            background-color: #3B82F6; /* Lighter blue on hover */
+            transform: translateY(-2px);
+        }
+        .nav-button:disabled {
+            background-color: #4A5568; /* Greyed out when disabled */
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        /* Style for audio player */
+        audio {
+            width: 100%;
+            max-width: 300px; /* Limit width for better appearance */
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+            background-color: #1F2937; /* Dark background for audio player */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            /* Hide the default controls */
+            display: none; /* Hide the audio player entirely if only custom controls are desired */
+        }
+        /* Style for top-right volume controls */
+        .volume-controls-top-right {
+            position: absolute;
+            top: 20px; /* Adjust as needed for spacing from top */
+            right: 20px; /* Adjust as needed for spacing from right */
+            z-index: 30; /* Ensure it's above other elements */
+            background-color: rgba(31, 41, 55, 0.85); /* Slightly less transparent dark background */
+            padding: 0.5rem; /* Smaller padding */
+            border-radius: 1rem; /* Consistent border-radius */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Refined shadow */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem; /* Spacing between buttons */
+        }
+        .volume-controls-top-right .nav-button {
+            padding: 0; /* Remove padding as width/height are fixed */
+            width: 40px; /* Smaller fixed width for square buttons */
+            height: 40px; /* Smaller fixed height for square buttons */
+            font-size: 1.1rem; /* Adjust font size for icons */
+            border-radius: 9999px; /* Fully rounded for circular buttons */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header for Comic Reader -->
+    <header class="bg-gray-900 shadow-lg py-4 px-6 flex justify-between items-center rounded-b-xl">
+        <button onclick="window.close()" class="nav-button bg-gray-700 hover:bg-gray-600">
+            &larr; กลับหน้าหลัก
+        </button>
+        <h1 class="text-2xl font-bold text-gray-100">การ์ตูน: เด็กหัวการค้าในยุค AI</h1>
+        <div class="w-24"></div> <!-- Placeholder for alignment -->
+    </header>
+
+    <!-- Comic Page Display Area -->
+    <main class="comic-container">
+        <img id="comicPage" src="" alt="หน้าการ์ตูน" class="comic-page">
+    </main>
+
+    <!-- Audio Player (hidden) -->
+    <audio id="comicAudio" loop>
+        <source src="audio/sound anime.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Custom Volume Controls (vertical, top-right aligned) -->
+    <div class="volume-controls-top-right">
+        <button id="volumeUpBtn" class="nav-button">
+            ➕
+        </button>
+        <button id="muteBtn" class="nav-button">
+            🔇
+        </button>
+        <button id="volumeDownBtn" class="nav-button">
+            ➖
+        </button>
+    </div>
+
+    <!-- Navigation Buttons in Footer -->
+    <footer class="bg-gray-900 py-6 px-6 flex justify-center items-center space-x-6 rounded-t-xl mt-auto">
+        <button id="prevBtn" class="nav-button">
+            &larr; ย้อนกลับ
+        </button>
+        <span id="pageNumber" class="text-lg font-semibold text-gray-300">หน้า 1/X</span>
+        <button id="nextBtn" class="nav-button">
+            ถัดไป &rarr;
+        </button>
+    </footer>
+
+    <script>
+        // Array of all 76 comic page image URLs
+        const comicPages = [
+            "https://i.ibb.co/XM52Ln5/1.jpg",
+            "https://i.ibb.co/Z1HdG8hc/2.jpg",
+            "https://i.ibb.co/gbQBT28V/3.jpg",
+            "https://i.ibb.co/wZfWZhkV/4.jpg",
+            "https://i.ibb.co/zTfgvX7B/5.jpg",
+            "https://i.ibb.co/JWmJqMDF/6.jpg",
+            "https://i.ibb.co/WvyntMLD/7.jpg",
+            "https://i.ibb.co/21kr8LQ3/8.jpg",
+            "https://i.ibb.co/Bp7TFcL/9.jpg",
+            "https://i.ibb.co/5W9Mc5Rg/10.jpg",
+            "https://i.ibb.co/Jwmc5TFq/11.jpg",
+            "https://i.ibb.co/LzmFN3nv/12.jpg",
+            "https://i.ibb.co/Wpg73p8X/13.jpg",
+            "https://i.ibb.co/7tvXMMr4/14.jpg",
+            "https://i.ibb.co/3525CpVj/15.jpg",
+            "https://i.ibb.co/93zj6rrs/16.jpg",
+            "https://i.ibb.co/nJ5YtYG/17.jpg",
+            "https://i.ibb.co/ZRDMMv5R/18.jpg",
+            "https://i.ibb.co/zy8Z9Xq/19.jpg",
+            "https://i.ibb.co/99RCwgVv/20.jpg",
+            "https://i.ibb.co/S4QWWQws/21.jpg",
+            "https://i.ibb.co/qMVnQm4c/22.jpg",
+            "https://i.ibb.co/1tdvNLZk/23.jpg",
+            "https://i.ibb.co/sppjGLhg/24.jpg",
+            "https://i.ibb.co/nNYpPCkx/25.jpg",
+            "https://i.ibb.co/gM8GG0Qk/26.jpg",
+            "https://i.ibb.co/whxX5M7S/27.jpg",
+            "https://i.ibb.co/B518x9qt/28.jpg",
+            "https://i.ibb.co/MxvWsz9b/29.jpg",
+            "https://i.ibb.co/xVRBnH3/30.jpg",
+            "https://i.ibb.co/wFhJB7pV/31.jpg",
+            "https://i.ibb.co/qFByHJ4z/32.jpg",
+            "https://i.ibb.co/gb32VBbD/33.jpg",
+            "https://i.ibb.co/Rpg9Lr3S/34.jpg",
+            "https://i.ibb.co/3m80stHt/35.jpg",
+            "https://i.ibb.co/HpxfjcS0/36.jpg",
+            "https://i.ibb.co/HLtWnYFT/37.jpg",
+            "https://i.ibb.co/XfPq15Sf/38.jpg",
+            "https://i.ibb.co/WNMP7vhS/39.jpg",
+            "https://i.ibb.co/TqWxq0Tz/40.jpg",
+            "https://i.ibb.co/W472FBdf/41.jpg",
+            "https://i.ibb.co/99fG917r/42.jpg",
+            "https://i.ibb.co/Gv9XFPy0/43.jpg",
+            "https://i.ibb.co/F4Z3DMmx/44.jpg",
+            "https://i.ibb.co/DPsLXH01/45.jpg",
+            "https://i.ibb.co/p6XN2tZd/46.jpg",
+            "https://i.ibb.co/KcDNcTZR/47.jpg",
+            "https://i.ibb.co/xtMTfRdK/48.jpg",
+            "https://i.ibb.co/35BVRh26/49.jpg",
+            "https://i.ibb.co/zTtDYZHS/50.jpg",
+            "https://i.ibb.co/vxTY34Dx/51.jpg",
+            "https://i.ibb.co/ZzqHfkKh/52.jpg",
+            "https://i.ibb.co/1GmGcnCr/53.jpg",
+            "https://i.ibb.co/7xNJb935/54.jpg",
+            "https://i.ibb.co/7dLhsTK0/55.jpg",
+            "https://i.ibb.co/6RQzRSxP/56.jpg",
+            "https://i.ibb.co/27HDpYx8/57.jpg",
+            "https://i.ibb.co/cKttWf20/58.jpg",
+            "https://i.ibb.co/xqHFVNjC/59.jpg",
+            "https://i.ibb.co/fVqNBBZH/60.jpg",
+            "https://i.ibb.co/2BYm1Gp/61.jpg",
+            "https://i.ibb.co/prd8NTdp/62.jpg",
+            "https://i.ibb.co/bMhZDxRq/63.jpg",
+            "https://i.ibb.co/N2y5Jsxt/64.jpg",
+            "https://i.ibb.co/M5QRzcVg/65.jpg",
+            "https://i.ibb.co/20XpfFP1/66.jpg",
+            "https://i.ibb.co/Tx9HG3gR/67.jpg",
+            "https://i.ibb.co/N6ZxfTn5/68.jpg",
+            "https://i.ibb.co/DHPGzj2B/69.jpg",
+            "https://i.ibb.co/s9Zs980N/70.jpg",
+            "https://i.ibb.co/MDs5nhw9/71.jpg",
+            "https://i.ibb.co/XxqTg0FC/72.jpg",
+            "https://i.ibb.co/gZDW1ST3/73.jpg",
+            "https://i.ibb.co/HDdVT1Sq/74.jpg",
+            "https://i.ibb.co/HT7CsMDv/75.jpg",
+            "https://i.ibb.co/9933ZwRg/76.jpg"
+        ];
+
+        let currentPageIndex = 0;
+        const comicPageImg = document.getElementById('comicPage');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const pageNumberSpan = document.getElementById('pageNumber');
+
+        function updateComicPage() {
+            comicPageImg.style.opacity = 0; // Fade out current image
+            setTimeout(() => {
+                comicPageImg.src = comicPages[currentPageIndex];
+                comicPageImg.alt = `หน้าการ์ตูนที่ ${currentPageIndex + 1}`;
+                pageNumberSpan.textContent = `หน้า ${currentPageIndex + 1}/${comicPages.length}`;
+                
+                // Enable/disable buttons
+                prevBtn.disabled = currentPageIndex === 0;
+                nextBtn.disabled = currentPageIndex === comicPages.length - 1;
+                
+                comicPageImg.style.opacity = 1; // Fade in new image
+            }, 200); // Short delay for fade effect
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentPageIndex > 0) {
+                currentPageIndex--;
+                updateComicPage();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentPageIndex < comicPages.length - 1) {
+                currentPageIndex++;
+                updateComicPage();
+            }
+        });
+
+        // Get references to audio element and new buttons
+        const comicAudio = document.getElementById('comicAudio');
+        const volumeUpBtn = document.getElementById('volumeUpBtn');
+        const volumeDownBtn = document.getElementById('volumeDownBtn');
+        const muteBtn = document.getElementById('muteBtn');
+
+        // Set initial volume (optional, default is usually 1.0)
+        comicAudio.volume = 0.5; // Start at 50% volume
+
+        // Function to update mute button icon
+        function updateMuteButtonIcon() {
+            muteBtn.textContent = comicAudio.muted ? '🔇' : '🔊';
+        }
+
+        // Event listeners for volume controls
+        volumeUpBtn.addEventListener('click', () => {
+            if (comicAudio.volume < 1.0) {
+                comicAudio.volume = Math.min(1.0, comicAudio.volume + 0.1);
+            }
+            // If muted, unmute when volume is adjusted
+            if (comicAudio.muted) {
+                comicAudio.muted = false;
+                updateMuteButtonIcon();
+            }
+            // Play audio if it's paused and not muted (to ensure user interaction for autoplay policies)
+            if (comicAudio.paused && !comicAudio.muted) {
+                comicAudio.play().catch(e => console.log("Autoplay prevented:", e));
+            }
+        });
+
+        volumeDownBtn.addEventListener('click', () => {
+            if (comicAudio.volume > 0.0) {
+                comicAudio.volume = Math.max(0.0, comicAudio.volume - 0.1);
+            }
+            // If muted, unmute when volume is adjusted
+            if (comicAudio.muted) {
+                comicAudio.muted = false;
+                updateMuteButtonIcon();
+            }
+            // Play audio if it's paused and not muted (to ensure user interaction for autoplay policies)
+            if (comicAudio.paused && !comicAudio.muted) {
+                comicAudio.play().catch(e => console.log("Autoplay prevented:", e));
+            }
+        });
+
+        muteBtn.addEventListener('click', () => {
+            comicAudio.muted = !comicAudio.muted;
+            updateMuteButtonIcon();
+            // If unmuted, attempt to play (to ensure user interaction for autoplay policies)
+            if (!comicAudio.muted && comicAudio.paused) {
+                comicAudio.play().catch(e => console.log("Autoplay prevented:", e));
+            }
+        });
+
+        // Initial update of mute button icon
+        updateMuteButtonIcon();
+
+        // Optional: Attempt to play audio on user interaction (e.g., first click on page)
+        // This is a common workaround for browser autoplay policies.
+        document.addEventListener('click', () => {
+            if (comicAudio.paused && !comicAudio.muted) {
+                comicAudio.play().catch(e => console.log("Autoplay prevented:", e));
+            }
+        }, { once: true }); // Only run this listener once
+
+        // Initial load
+        updateComicPage();
+    </script>
+</body>
+</html>
