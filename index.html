@@ -178,6 +178,31 @@
         .progress-bar.danger {
             background-color: #EF4444; /* red-500 */
         }
+        /* Specific styles for AI comparison section cards */
+        .ai-comparison-card {
+            background-color: #1F2937; /* Consistent dark card background */
+            border-radius: 2rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(59, 130, 246, 0.15);
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.4s ease-in-out;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            padding: 2.5rem; /* Increased padding for more space */
+        }
+        .ai-comparison-card:hover {
+            transform: translateY(-10px); /* Slightly less pronounced lift than general cards */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(59, 130, 246, 0.25);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+        .ai-comparison-card ul li {
+            margin-bottom: 2rem; /* Increased space between list items */
+        }
+        .ai-comparison-card ul li:last-child {
+            margin-bottom: 0;
+        }
+        .ai-comparison-card .item-icon {
+            font-size: 2.5rem; /* Larger icon size */
+            margin-right: 1rem; /* Space between icon and text */
+            line-height: 1; /* Align vertically */
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -306,87 +331,147 @@
     <section id="ai-comparison" class="py-24 md:py-36 bg-gray-900">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 text-gray-100 animate-on-scroll">
-                AI ในธุรกิจ: ข้อได้เปรียบและการรับมือ
+                AI ในธุรกิจ: ข้อดีและข้อเสีย
             </h2>
             <p class="max-w-5xl mx-auto text-center text-xl text-gray-300 mb-16 animate-on-scroll">
-                การนำ AI มาใช้ในธุรกิจไม่ใช่แค่ทางเลือก แต่เป็นสิ่งจำเป็นสำหรับความอยู่รอดและการเติบโตในยุคปัจจุบัน มาดูกันว่าการตัดสินใจนี้ส่งผลอย่างไรต่อองค์กรของคุณ
+                การนำ AI มาใช้ในธุรกิจไม่ใช่แค่ทางเลือก แต่เป็นสิ่งจำเป็นสำหรับความอยู่รอดและการเติบโตในยุคปัจจุบัน มาดูข้อดีและข้อเสียของการใช้ AI ในบริบทของธุรกิจกัน
             </p>
 
             <div class="flex flex-col lg:flex-row gap-12">
                 <!-- Advantages of Using AI -->
-                <div class="lg:w-1/2 bg-blue-900 p-10 rounded-3xl shadow-xl animate-on-scroll">
+                <div class="lg:w-1/2 bg-blue-900 p-10 rounded-3xl shadow-xl ai-comparison-card animate-on-scroll">
                     <h3 class="text-3xl font-bold text-blue-300 mb-8 text-center">
-                        ✅ ข้อได้เปรียบของการใช้ AI ในธุรกิจ
+                        ✅ ข้อดีของการใช้ AI ในธุรกิจ
                     </h3>
                     <ul class="space-y-8 text-lg text-gray-200">
                         <li>
-                            <strong class="text-blue-100 text-xl">⚡️ เพิ่มประสิทธิภาพและระบบอัตโนมัติ:</strong>
-                            <p class="ml-8 mt-2">สามารถทำงานซ้ำๆ หรืองานที่ใช้เวลานานได้อย่างรวดเร็วและแม่นยำ ลดภาระงานของมนุษย์และเพิ่มความเร็วในการดำเนินงาน</p>
-                            <p class="ml-8 text-sm text-gray-400 italic">ตัวอย่าง: ระบบ AI คัดแยกอีเมลลูกค้าอัตโนมัติ, หุ่นยนต์ในโรงงาน</p>
+                            <div class="flex items-start">
+                                <span class="item-icon">⚡️</span>
+                                <div class="flex-1">
+                                    <strong class="text-blue-100 text-xl block mb-1">เพิ่มประสิทธิภาพและระบบอัตโนมัติ:</strong>
+                                    <p class="text-gray-300">AI ช่วยให้งานซ้ำๆ และงานที่ใช้เวลานานทำได้รวดเร็ว แม่นยำ และลดภาระงานของมนุษย์</p>
+                                    <p class="text-sm text-gray-400 italic mt-1">ตัวอย่าง: ระบบ AI คัดแยกอีเมลลูกค้าอัตโนมัติ, หุ่นยนต์ในโรงงาน</p>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <strong class="text-blue-100 text-xl">📊 การวิเคราะห์ข้อมูลเชิงลึกและการตัดสินใจที่ดีขึ้น:</strong>
-                            <p class="ml-8 mt-2">ประมวลผลและวิเคราะห์ข้อมูลขนาดใหญ่ (Big Data) เพื่อค้นหารูปแบบและแนวโน้ม ช่วยให้การตัดสินใจแม่นยำขึ้น</p>
-                            <p class="ml-8 text-sm text-gray-400 italic">ตัวอย่าง: AI วิเคราะห์พฤติกรรมการซื้อเพื่อแนะนำสินค้า, คาดการณ์ยอดขาย</p>
+                            <div class="flex items-start">
+                                <span class="item-icon">📊</span>
+                                <div class="flex-1">
+                                    <strong class="text-blue-100 text-xl block mb-1">การวิเคราะห์ข้อมูลเชิงลึก:</strong>
+                                    <p class="text-gray-300">AI ประมวลผล Big Data เพื่อค้นหารูปแบบและแนวโน้ม ช่วยให้การตัดสินใจทางธุรกิจแม่นยำขึ้น</p>
+                                    <p class="text-sm text-gray-400 italic mt-1">ตัวอย่าง: AI วิเคราะห์พฤติกรรมการซื้อเพื่อแนะนำสินค้า, คาดการณ์ยอดขาย</p>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <strong class="text-blue-100 text-xl">👥 การปรับแต่งเฉพาะบุคคลและประสบการณ์ลูกค้าที่ดีขึ้น:</strong>
-                            <p class="ml-8 mt-2">เรียนรู้ความต้องการของลูกค้าแต่ละราย เพื่อนำเสนอสินค้า บริการ หรือประสบการณ์ที่ปรับแต่งให้เหมาะสม</p>
-                            <p class="ml-8 text-sm text-gray-400 italic">ตัวอย่าง: ระบบแนะนำภาพยนตร์ใน Netflix, โฆษณาที่ปรับแต่งเฉพาะบุคคล</p>
+                            <div class="flex items-start">
+                                <span class="item-icon">👥</span>
+                                <div class="flex-1">
+                                    <strong class="text-blue-100 text-xl block mb-1">ประสบการณ์ลูกค้าที่ดีขึ้น:</strong>
+                                    <p class="text-gray-300">AI เรียนรู้ความต้องการเฉพาะบุคคล เพื่อนำเสนอสินค้าและบริการที่ปรับแต่งให้ตรงใจลูกค้า</p>
+                                    <p class="text-sm text-gray-400 italic mt-1">ตัวอย่าง: ระบบแนะนำภาพยนตร์ใน Netflix, โฆษณาที่ปรับแต่งเฉพาะบุคคล</p>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <strong class="text-blue-100 text-xl">💡 นวัตกรรมและการสร้างโมเดลธุรกิจใหม่:</strong>
-                            <p class="ml-8 mt-2">ขับเคลื่อนการสร้างสรรค์ผลิตภัณฑ์ บริการ และโมเดลธุรกิจใหม่ๆ ที่ไม่เคยมีมาก่อน ทำให้เกิดโอกาสทางธุรกิจที่ไม่จำกัด</p>
-                            <p class="ml-8 text-sm text-gray-400 italic">ตัวอย่าง: รถยนต์ไร้คนขับ, ระบบวินิจฉัยโรคทางการแพทย์</p>
+                            <div class="flex items-start">
+                                <span class="item-icon">💡</span>
+                                <div class="flex-1">
+                                    <strong class="text-blue-100 text-xl block mb-1">นวัตกรรมและโมเดลธุรกิจใหม่:</strong>
+                                    <p class="text-gray-300">AI เป็นแรงขับเคลื่อนสำคัญในการสร้างสรรค์ผลิตภัณฑ์ บริการ และโมเดลธุรกิจใหม่ๆ</p>
+                                    <p class="text-sm text-gray-400 italic mt-1">ตัวอย่าง: รถยนต์ไร้คนขับ, ระบบวินิจฉัยโรคทางการแพทย์</p>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <strong class="text-blue-100 text-xl">💰 ลดต้นทุนและเพิ่มผลกำไร:</strong>
-                            <p class="ml-8 mt-2">ลดความจำเป็นในการใช้แรงงานคน ลดข้อผิดพลาด และเพิ่มประสิทธิภาพในการใช้ทรัพยากร</p>
-                            <p class="ml-8 text-sm text-gray-400 italic">ตัวอย่าง: AI เพิ่มประสิทธิภาพเส้นทางการขนส่ง, ตรวจสอบคุณภาพสินค้า</p>
+                            <div class="flex items-start">
+                                <span class="item-icon">💰</span>
+                                <div class="flex-1">
+                                    <strong class="text-blue-100 text-xl block mb-1">ลดต้นทุนและเพิ่มผลกำไร:</strong>
+                                    <p class="text-gray-300">AI ลดความจำเป็นในการใช้แรงงานคน ลดข้อผิดพลาด และเพิ่มประสิทธิภาพในการใช้ทรัพยากร</p>
+                                    <p class="text-sm text-gray-400 italic mt-1">ตัวอย่าง: AI เพิ่มประสิทธิภาพเส้นทางการขนส่ง, ตรวจสอบคุณภาพสินค้า</p>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <strong class="text-blue-100 text-xl">🏆 ความสามารถในการแข่งขัน:</strong>
-                            <p class="ml-8 mt-2">สร้างความได้เปรียบเหนือคู่แข่งผ่านประสิทธิภาพ นวัตกรรม และความเข้าใจลูกค้าที่เหนือกว่า</p>
-                            <p class="ml-8 text-sm text-gray-400 italic">ตัวอย่าง: นำเสนอสินค้า/บริการได้เร็วกว่า ถูกกว่า หรือดีกว่าคู่แข่ง</p>
+                            <div class="flex items-start">
+                                <span class="item-icon">🏆</span>
+                                <div class="flex-1">
+                                    <strong class="text-blue-100 text-xl block mb-1">ความสามารถในการแข่งขัน:</strong>
+                                    <p class="text-gray-300">สร้างความได้เปรียบเหนือคู่แข่งผ่านประสิทธิภาพ นวัตกรรม และความเข้าใจลูกค้าที่เหนือกว่า</p>
+                                    <p class="text-sm text-gray-400 italic mt-1">ตัวอย่าง: นำเสนอสินค้า/บริการได้เร็วกว่า ถูกกว่า หรือดีกว่าคู่แข่ง</p>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Disadvantages of Not Using AI -->
-                <div class="lg:w-1/2 bg-red-900 p-10 rounded-3xl shadow-xl animate-on-scroll">
+                <div class="lg:w-1/2 bg-red-900 p-10 rounded-3xl shadow-xl ai-comparison-card animate-on-scroll">
                     <h3 class="text-3xl font-bold text-red-300 mb-8 text-center">
-                        ❌ ข้อจำกัดหรือข้อเสียของการไม่ใช้ AI ในธุรกิจ
+                        ❌ ข้อเสียของการไม่ใช้ AI ในธุรกิจ
                     </h3>
                     <ul class="space-y-8 text-lg text-gray-200">
                         <li>
-                            <strong class="text-red-100 text-xl">📉 ประสิทธิภาพต่ำและข้อผิดพลาดจากคน:</strong>
-                            <p class="ml-8 mt-2">การพึ่งพาแรงงานคนเป็นหลัก อาจทำให้เกิดความล่าช้า ข้อผิดพลาด และความไร้ประสิทธิภาพ</p>
-                            <p class="ml-8 text-sm text-gray-400 italic">ผลกระทบ: การประมวลผลข้อมูลช้า, ข้อผิดพลาดในการบันทึก, บริการลูกค้าล่าช้า</p>
+                            <div class="flex items-start">
+                                <span class="item-icon">📉</span>
+                                <div class="flex-1">
+                                    <strong class="text-red-100 text-xl block mb-1">ประสิทธิภาพต่ำและข้อผิดพลาดจากคน:</strong>
+                                    <p class="text-gray-300">การพึ่งพาแรงงานคนเป็นหลัก อาจทำให้เกิดความล่าช้า ข้อผิดพลาด และความไร้ประสิทธิภาพ</p>
+                                    <p class="text-sm text-gray-400 italic mt-1">ผลกระทบ: การประมวลผลข้อมูลช้า, ข้อผิดพลาดในการบันทึก, บริการลูกค้าล่าช้า</p>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <strong class="text-red-100 text-xl">🚫 ขาดข้อมูลเชิงลึกในการตัดสินใจ:</strong>
-                            <p class="ml-8 mt-2">อาจพลาดโอกาสในการทำความเข้าใจตลาด ลูกค้าอย่างลึกซึ้ง ทำให้การตัดสินใจอยู่บนพื้นฐานของสัญชาตญาณ</p>
-                            <p class="ml-8 text-sm text-gray-400 italic">ผลกระทบ: การตัดสินใจที่ผิดพลาด, การพลาดโอกาสทางธุรกิจ</p>
+                            <div class="flex items-start">
+                                <span class="item-icon">🚫</span>
+                                <div class="flex-1">
+                                    <strong class="text-red-100 text-xl block mb-1">ขาดข้อมูลเชิงลึกในการตัดสินใจ:</strong>
+                                    <p class="text-gray-300">การไม่ใช้ AI ทำให้พลาดโอกาสในการวิเคราะห์ข้อมูลเชิงลึก ส่งผลให้การตัดสินใจขาดความแม่นยำ</p>
+                                    <p class="text-sm text-gray-400 italic mt-1">ผลกระทบ: การตัดสินใจที่ผิดพลาด, การพลาดโอกาสทางธุรกิจ</p>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <strong class="text-red-100 text-xl">👥 ประสบการณ์ลูกค้าแบบทั่วไป:</strong>
-                            <p class="ml-8 mt-2">การนำเสนอสินค้าและบริการเป็นแบบเดียวกันสำหรับลูกค้าทุกคน ขาดการปรับแต่งเฉพาะบุคคล</p>
-                            <p class="ml-8 text-sm text-gray-400 italic">ผลกระทบ: ลูกค้าไม่รู้สึกผูกพันกับแบรนด์, เปลี่ยนไปหาคู่แข่งง่าย</p>
+                            <div class="flex items-start">
+                                <span class="item-icon">👥</span>
+                                <div class="flex-1">
+                                    <strong class="text-red-100 text-xl block mb-1">ประสบการณ์ลูกค้าแบบทั่วไป:</strong>
+                                    <p class="text-gray-300">การนำเสนอสินค้าและบริการเป็นแบบเดียวกันสำหรับลูกค้าทุกคน ขาดการปรับแต่งเฉพาะบุคคล</p>
+                                    <p class="text-sm text-gray-400 italic mt-1">ผลกระทบ: ลูกค้าไม่รู้สึกผูกพันกับแบรนด์, เปลี่ยนไปหาคู่แข่งง่าย</p>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <strong class="text-red-100 text-xl">⛔️ พลาดโอกาสในการสร้างนวัตกรรม:</strong>
-                            <p class="ml-8 mt-2">พลาดโอกาสในการสร้างสรรค์นวัตกรรมใหม่ๆ ที่สามารถพลิกโฉมอุตสาหกรรม</p>
-                            <p class="ml-8 text-sm text-gray-400 italic">ผลกระทบ: การเติบโตหยุดชะงัก, ไม่สามารถตอบสนองความต้องการใหม่ๆ</p>
+                            <div class="flex items-start">
+                                <span class="item-icon">⛔️</span>
+                                <div class="flex-1">
+                                    <strong class="text-red-100 text-xl block mb-1">พลาดโอกาสในการสร้างนวัตกรรม:</strong>
+                                    <p class="text-gray-300">ธุรกิจที่ไม่เปิดรับ AI อาจพลาดการสร้างสรรค์นวัตกรรมที่สามารถพลิกโฉมอุตสาหกรรม</p>
+                                    <p class="text-sm text-gray-400 italic mt-1">ผลกระทบ: การเติบโตหยุดชะงัก, ไม่สามารถตอบสนองความต้องการใหม่ๆ</p>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <strong class="text-red-100 text-xl">💸 ต้นทุนการดำเนินงานสูงขึ้น:</strong>
-                            <p class="ml-8 mt-2">ในระยะยาว การพึ่งพาแรงงานคนอาจทำให้ต้นทุนการดำเนินงานสูงกว่า</p>
-                            <p class="ml-8 text-sm text-gray-400 italic">ผลกระทบ: กำไรลดลง, ความสามารถในการแข่งขันด้านราคาลดลง</p>
+                            <div class="flex items-start">
+                                <span class="item-icon">💸</span>
+                                <div class="flex-1">
+                                    <strong class="text-red-100 text-xl block mb-1">ต้นทุนการดำเนินงานสูงขึ้น:</strong>
+                                    <p class="text-gray-300">ในระยะยาว การพึ่งพาแรงงานคนในงานที่ AI ทำได้ดีกว่า อาจทำให้ต้นทุนสูงกว่าและกำไรลดลง</p>
+                                    <p class="text-sm text-gray-400 italic mt-1">ผลกระทบ: กำไรลดลง, ความสามารถในการแข่งขันด้านราคาลดลง</p>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <strong class="text-red-100 text-xl">⚔️ เสียเปรียบในการแข่งขัน:</strong>
-                            <p class="ml-8 mt-2">ไม่สามารถแข่งขันกับคู่แข่งที่นำ AI มาใช้ในการเพิ่มประสิทธิภาพ ลดต้นทุน หรือสร้างนวัตกรรมได้</p>
-                            <p class="ml-8 text-sm text-gray-400 italic">ผลกระทบ: เสียส่วนแบ่งตลาด, ไม่สามารถนำเสนอได้ดีเท่าคู่แข่ง</p>
+                            <div class="flex items-start">
+                                <span class="item-icon">⚔️</span>
+                                <div class="flex-1">
+                                    <strong class="text-red-100 text-xl block mb-1">เสียเปรียบในการแข่งขัน:</strong>
+                                    <p class="text-gray-300">ไม่สามารถแข่งขันกับคู่แข่งที่นำ AI มาใช้ในการเพิ่มประสิทธิภาพ ลดต้นทุน หรือสร้างนวัตกรรมได้</p>
+                                    <p class="text-sm text-gray-400 italic mt-1">ผลกระทบ: เสียส่วนแบ่งตลาด, ไม่สามารถนำเสนอได้ดีเท่าคู่แข่ง</p>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -460,6 +545,9 @@
             <p>นายไทแท้ ศรีพัฒน์ <span class="font-mono text-blue-300">รหัสนักศึกษา: 2511211105156</span></p>
             <p>นส.รัดดา บุตรพรม <span class="font-mono text-blue-300">รหัสนักศึกษา: 2511211105155</span></p>
             <p>นายธนโชติ ลิมปิวงศ์ <span class="font-mono text-blue-300">รหัสนักศึกษา: 2511211105242</span></p>
+            <p>จุฑาภรณ์ แหลมทองหลาง <span class="font-mono text-blue-300">รหัสนักศึกษา: 2511211101004</span></p>
+            <p>ธนพร พรหมเทพ <span class="font-mono text-blue-300">รหัสนักศึกษา: 2511211105154</span></p>
+            <p>นัยรัตน์ ทรอดทะนง <span class="font-mono text-blue-300">รหัสนักศึกษา: 2511211105207</span></p>
             <p class="mt-6 text-xs">&copy; 2025 เด็กหัวการค้าในยุค AI. สงวนลิขสิทธิ์.</p>
         </div>
     </footer>
@@ -513,7 +601,7 @@
                     if (entry.isIntersecting) {
                         const parentSection = entry.target;
                         // Select all direct children or specific elements within the section that need staggering
-                        const elementsToAnimate = parentSection.querySelectorAll('h2.animate-on-scroll, p.animate-on-scroll, .md\\:w-1\\/2.animate-on-scroll, .card.animate-on-scroll, .lg\\:w-1\\/2.animate-on-scroll, .game-card.animate-on-scroll');
+                        const elementsToAnimate = parentSection.querySelectorAll('h2.animate-on-scroll, p.animate-on-scroll, .md\\:w-1\\/2.animate-on-scroll, .card.animate-on-scroll, .lg\\:w-1\\/2.animate-on-scroll, .game-card.animate-on-scroll, .ai-comparison-card.animate-on-scroll');
                         
                         elementsToAnimate.forEach((el, index) => {
                             el.style.transitionDelay = `${index * 150}ms`; // Staggered delay for children (increased from 100ms to 150ms for more noticeable stagger)
